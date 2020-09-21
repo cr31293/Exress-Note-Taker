@@ -38,45 +38,21 @@ module.exports = function(app) {
         res.json(note);
     });
 
-    // app.delete("/api/notes/:id", function(req, res) {
-    //     if (notes.id = req.params.id) {
-    //         notes.splice(notes.id,0,);
-    //     }
-    // })
-
-
-
-// app.get("/api/notes", function(req, res) {
-//     notes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
-//     res.json(notes);
-// });
-
-// app.post("/api/notes", function(req, res) {
-//     var note = {
-//         id: Math.floor(Math.random()),
-//         text: req.body.title,
-//     };
-//     notes.push(note);
-
-//     fs.writeFileSync("./db/db.json", JSON.stringify(notes, function(err, res) {
-//         if (err) {
-//             throw err;
-//         }
-//     }))
-//     res.json(note);
-// });
-
-
-
-// // if we want to clear out the db
-// app.post("/api/clear", function(req, res) {
-//     // empty out array
-//     notes.length = 0;
-
-//     res.json({ ok: true });
-// })
-
+    app.delete("/api/notes/:id", function(req, res) {
+        notes2 = [];
+        for (var i = 0; i < notes.length; i++) {
+            if (notes[i].id != req.params.id) {
+                notes2.push(notes[i]);
+            }
+        }
+        notes = notes2;
+        fs.writeFileSync("./db/db.json", JSON.stringify(notes), function(err, res) {
+            if (err) {
+                throw err;
+            }
+        });
+        res.json(notes);
+        
+    })
 };
-
-
 
